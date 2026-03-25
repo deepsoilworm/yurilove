@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secret</title>
   <link href="https://unpkg.com/nes.css@2.3.0/css/nes.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/galmuri/dist/Galmuri11.css" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: 'NeoDGM';
+      src: url('neodgm.woff') format('woff');
+      font-display: swap;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -20,7 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Galmuri11', monospace;
+      font-family: 'NeoDGM', monospace;
       position: relative;
       overflow: hidden;
     }
@@ -74,7 +78,7 @@
     }
 
     .nes-input {
-      font-family: 'Galmuri11', monospace;
+      font-family: 'NeoDGM', monospace;
       font-size: clamp(1rem, 3vw, 1.4rem);
       text-align: center;
       width: 80%;
