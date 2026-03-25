@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret</title>
+  <link href="https://unpkg.com/nes.css@2.3.0/css/nes.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/galmuri/dist/Galmuri11.css" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #FF007F;
+      background: linear-gradient(135deg, #FF007F 0%, #FF1493 40%, #DA00FF 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Galmuri11', monospace;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 40% 70%, #ffe4f3 100%, transparent),
+        radial-gradient(2px 2px at 60% 20%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 80% 60%, #ffe4f3 100%, transparent),
+        radial-gradient(1px 1px at 10% 80%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 70% 40%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 90% 10%, #ffe4f3 100%, transparent),
+        radial-gradient(1px 1px at 50% 90%, #fff 100%, transparent);
+      animation: twinkle 3s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    .container {
+      text-align: center;
+      padding: 1.5rem;
+      z-index: 1;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .question {
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      color: #FFFF00;
+      text-shadow:
+        3px 3px 0px #FF007F,
+        -1px -1px 0px #00FFFF,
+        0 0 20px rgba(255, 255, 0, 0.5);
+      margin-bottom: 2rem;
+      line-height: 2;
+      letter-spacing: 0.05em;
+    }
+
+    .nes-field {
+      display: inline-block;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    .nes-field .nes-input {
+      font-family: 'Galmuri11', monospace;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      text-align: center;
+      width: 100%;
+      letter-spacing: 0.4em;
+      border-color: #FFFF00;
+      background: rgba(255, 255, 255, 0.95);
+      color: #FF007F;
+    }
+
+    .nes-field .nes-input:focus {
+      outline: none;
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+
+    .shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="question">
+      내가 가장 사랑하는 사람의<br>생일은?
+    </p>
+    <div class="nes-field is-inline">
+      <input type="password" id="answer" class="nes-input" maxlength="4" placeholder="****" autofocus>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('answer');
+
+    input.addEventListener('input', function () {
+      if (this.value.length === 4) {
+        if (this.value === '0325') {
+          window.location.href = 'birthday.html';
+        } else {
+          this.classList.add('shake');
+          setTimeout(() => {
+            this.classList.remove('shake');
+            this.value = '';
+          }, 400);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
