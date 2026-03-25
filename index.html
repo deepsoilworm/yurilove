@@ -80,23 +80,44 @@
       display: inline-block;
     }
 
-    .input-wrap input {
-      font-family: 'NeoDGM', monospace;
-      font-size: clamp(1.2rem, 4vw, 1.6rem);
-      text-align: center;
-      width: clamp(180px, 50vw, 260px);
-      padding: 12px 16px;
-      border: none;
-      background: transparent;
-      color: #FF007F;
-      letter-spacing: 0.5em;
-      text-indent: 0.5em;
-      outline: none;
-      caret-color: #FF007F;
-    }
 
     .input-wrap:focus-within {
       box-shadow: 0 0 15px rgba(255, 255, 0, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 14px 24px;
+      pointer-events: none;
+    }
+
+    .dot {
+      width: clamp(14px, 3vw, 20px);
+      height: clamp(14px, 3vw, 20px);
+      border-radius: 50%;
+      border: 3px solid #FF007F;
+      background: transparent;
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .dot.filled {
+      background: #FF007F;
+      transform: scale(1.15);
+    }
+
+    .input-wrap input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .input-wrap {
+      position: relative;
     }
 
     .shake {
@@ -117,15 +138,25 @@
       세젤예 여신님의<br>생일은?
     </p>
     <div class="input-wrap">
-      <input type="password" id="answer" maxlength="4" placeholder="****" autofocus>
+      <div class="dots" id="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <input type="tel" id="answer" maxlength="4" autofocus autocomplete="off">
     </div>
   </div>
 
   <script>
     const input = document.getElementById('answer');
+    const dots = document.querySelectorAll('.dot');
 
     input.addEventListener('input', function () {
-      if (this.value.length === 4) {
+      const len = this.value.length;
+      dots.forEach((d, i) => d.classList.toggle('filled', i < len));
+
+      if (len === 4) {
         if (this.value === '0325') {
           window.location.href = 'birthday.html';
         } else {
@@ -133,10 +164,14 @@
           setTimeout(() => {
             this.parentElement.classList.remove('shake');
             this.value = '';
+            dots.forEach(d => d.classList.remove('filled'));
           }, 400);
         }
       }
     });
+
+    // 화면 어디를 터치해도 입력 포커스
+    document.addEventListener('click', () => input.focus());
   </script>
 </body>
 </html>
